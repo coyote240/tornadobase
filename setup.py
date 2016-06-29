@@ -8,4 +8,5 @@ setup(name='tornadobase',
       license='MIT',
       install_requires=[
           'tornado>=4'
-      ])
+      ],
+      tests_require=['nose'])
