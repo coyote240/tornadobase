@@ -48,6 +48,7 @@ class Application(tornado.web.Application):
 
     def init_handlers(self):
         '''Assign handler objects to self.handlers'''
+
         raise NotImplementedError
 
     def init_signal_handlers(self):
@@ -66,8 +67,3 @@ class Application(tornado.web.Application):
 
         logging.info('Starting server...')
         tornado.ioloop.IOLoop.instance().start()
-
-
-if __name__ == '__main__':
-    app = Application()
-    app.start()
