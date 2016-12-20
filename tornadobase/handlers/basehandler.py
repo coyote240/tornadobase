@@ -24,6 +24,8 @@ class BaseHandler(tornado.web.RequestHandler):
                     reason=reason)
 
     def get_current_user(self):
+        if options.cookie_secret is None:
+            return None
         return self.get_secure_cookie('user')
 
     def info(self, message):
