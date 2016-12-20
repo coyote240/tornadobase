@@ -1,13 +1,20 @@
-# Base Application for Tornado Web [![Build Status](https://travis-ci.org/coyote240/tornadobase.svg?branch=master)](https://travis-ci.org/coyote240/tornadobase)
+# tornadobase [![Build Status](https://travis-ci.org/coyote240/tornadobase.svg?branch=master)](https://travis-ci.org/coyote240/tornadobase)
+
+A base application and boilerplate for the Tornado web server.
 
 ## Installation
 
-To include tornadobase in your application, add a dependency link to your
-setup.py:
+To include tornadobase in your application install using pip:
+
+```
+pip install -e git://github.com/coyote240/tornadobase@master#egg=tornadobase
+```
+
+or add a dependency link to your setup.py:
 
 ```python
 dependency_links=[
-    'git+git://github.com/coyoto240/tornadobase/tarball/master#egg=tornadobase'
+    '-e git://github.com/coyote240/tornadobase@master#egg=tornadobase'
 ]
 ```
 
@@ -18,16 +25,31 @@ dependency_links=[
 
 ## Use
 
+tornadobase provides basic Application and Handler classes that wrap up some of
+the boilerplate you'll typically need when using the Tornado web server.  To get
+a simple site running, create a file called `application.py`:
+
 ```python
+from tornadobase.handlers import BaseHandler
 from tornadobase.application import Application
+
+class IndexHandler(BaseHandler):
+
+    def get(self):
+        self.write('Hello, World!')
+
 
 class MyApp(Application):
 
-    def init_settings(self):
+    def init_handlers(self):
 
-        settings = {
-            'debug': True
-        }
+        self.handlers = [
+            (r'/', IndexHandler)
+        ]
+```
 
-        return settings
+Then start the web server:
+
+```
+python application.py
 ```
