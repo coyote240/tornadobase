@@ -24,7 +24,7 @@ class Application(tornado.web.Application):
     def init_options(self):
         define('server', default='TornadoServer/{}'.format(tornado.version),
                help='The Server header returned with HTTP responses.')
-        define('port', type=int,
+        define('port', type=int, default=8888,
                help='The port on which this app will listen.')
         define('template_path', help='Location of template files.')
         define('cookie_secret', help='Cookie secret key')
