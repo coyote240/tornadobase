@@ -26,6 +26,7 @@ class Application(tornado.web.Application):
                help='The Server header returned with HTTP responses.')
         define('port', type=int, default=8888,
                help='The port on which this app will listen.')
+        define('login_url', default='/login', help='Path to login form')
         define('template_path', help='Location of template files.')
         define('static_path', help='Location of static files.')
         define('cookie_secret', help='Cookie secret key')
@@ -41,6 +42,7 @@ class Application(tornado.web.Application):
     def init_settings(self):
         settings = {
             'debug': True,
+            'login_url': options.login_url,
             'template_path': options.template_path,
             'static_path': options.static_path,
             'xsrf_cookies': options.xsrf_cookies,
