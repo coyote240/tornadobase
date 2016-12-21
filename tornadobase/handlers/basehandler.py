@@ -29,3 +29,8 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def error(self, message):
         logging.error(message)
+
+
+class BaseStaticHandler(tornado.web.StaticFileHandler):
+    def set_default_headers(self):
+        server_settings(self)

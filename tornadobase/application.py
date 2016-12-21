@@ -27,6 +27,7 @@ class Application(tornado.web.Application):
         define('port', type=int, default=8888,
                help='The port on which this app will listen.')
         define('template_path', help='Location of template files.')
+        define('static_path', help='Location of static files.')
         define('cookie_secret', help='Cookie secret key')
         define('xsrf_cookies', default=True)
         define('x_frame_options', default='DENY')
@@ -41,6 +42,7 @@ class Application(tornado.web.Application):
         settings = {
             'debug': True,
             'template_path': options.template_path,
+            'static_path': options.static_path,
             'xsrf_cookies': options.xsrf_cookies,
             'cookie_secret': options.cookie_secret}
 

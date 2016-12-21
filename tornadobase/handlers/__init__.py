@@ -1,2 +1,3 @@
-from .basehandler import BaseHandler
-__all__ = ['BaseHandler']
+from .basehandler import BaseHandler, BaseStaticHandler
+
+__all__ = ['BaseHandler', 'BaseStaticHandler']
