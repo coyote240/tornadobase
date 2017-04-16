@@ -6,6 +6,7 @@ setup(name='tornadobase',
       author='Adam A.G. Shamblin',
       author_email='adam.shamblin@tutanota.com',
       license='MIT',
+      url='https://github.com/coyote240/tornadobase',
       install_requires=[
           'tornado>=4'
       ],
