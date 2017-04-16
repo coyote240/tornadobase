@@ -1,7 +1,8 @@
 tornadobase
 ===========
 
-.. _travis: https://travis-ci.org/coyote240/tornadobase.svg
+.. image:: https://travis-ci.org/coyote240/tornadobase.svg?branch=master
+    :target: https://travis-ci.org/coyote240/tornadobase
 
 A base application and boilerplate for the Tornado web server.
 
@@ -16,6 +17,7 @@ Run the tests
 -------------
 
     pip install nose
+
     nosetests
 
 Use
