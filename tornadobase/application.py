@@ -34,6 +34,7 @@ class Application(tornado.web.Application):
         define('x_frame_options', default='DENY')
         define('x_xss_protection', default=1)
         define('x_content_type_options', default='nosniff')
+        define('debug', default=True)
         define('config', help='Path to config file',
                callback=lambda path: options.parse_config_file(path,
                                                                final=False))
@@ -41,7 +42,7 @@ class Application(tornado.web.Application):
 
     def init_settings(self):
         settings = {
-            'debug': True,
+            'debug': options.debug,
             'login_url': options.login_url,
             'template_path': options.template_path,
             'static_path': options.static_path,
@@ -66,8 +67,16 @@ class Application(tornado.web.Application):
             lambda: tornado.ioloop.IOLoop.instance().stop())
 
     def start(self):
-        server = HTTPServer(self)
-        server.listen(options.port)
-
         logging.info('Starting server...')
-        tornado.ioloop.IOLoop.instance().start()
+
+        server = HTTPServer(self)
+
+        if options.debug:
+            server.listen(options.port)
+            tornado.ioloop.IOLoop.instance().start()
+        else:
+            server.bind(options.port)
+            server.start(0)
+            tornado.ioloop.IOLoop.current().start()
+
+        logging.info('Server instance running on port {}'.format(options.port))

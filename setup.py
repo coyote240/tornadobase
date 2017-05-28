@@ -7,7 +7,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='tornadobase',
-      version='0.1.2',
+      version='0.1.3',
       description='Starter application and handlers for tornado web apps.',
       long_description=long_description,
       author='Adam A.G. Shamblin',
