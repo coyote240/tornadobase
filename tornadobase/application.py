@@ -1,8 +1,5 @@
-#!/usr/bin/env python
-
 import signal
 import logging
-
 import tornado.web
 import tornado.ioloop
 import tornado.autoreload
@@ -10,35 +7,34 @@ from tornado.httpserver import HTTPServer
 from tornado.options import define, options
 
 
+define('server', default='TornadoServer/{}'.format(tornado.version),
+       help='The Server header returned with HTTP responses.')
+define('port', type=int, default=8888,
+       help='The port on which this app will listen.')
+define('login_url', default='/login', help='Path to login form')
+define('template_path', help='Location of template files.')
+define('static_path', help='Location of static files.')
+define('cookie_secret', help='Cookie secret key')
+define('xsrf_cookies', default=True)
+define('x_frame_options', default='DENY')
+define('x_xss_protection', default=1)
+define('x_content_type_options', default='nosniff')
+define('debug', default=True)
+define('config', help='Path to config file',
+       callback=lambda path: options.parse_config_file(path,
+                                                       final=False))
+options.parse_command_line()
+
+
 class Application(tornado.web.Application):
 
     def __init__(self):
-        self.init_options()
         self.init_handlers()
         self.init_signal_handlers()
 
         settings = self.init_settings()
 
         tornado.web.Application.__init__(self, self.handlers, **settings)
-
-    def init_options(self):
-        define('server', default='TornadoServer/{}'.format(tornado.version),
-               help='The Server header returned with HTTP responses.')
-        define('port', type=int, default=8888,
-               help='The port on which this app will listen.')
-        define('login_url', default='/login', help='Path to login form')
-        define('template_path', help='Location of template files.')
-        define('static_path', help='Location of static files.')
-        define('cookie_secret', help='Cookie secret key')
-        define('xsrf_cookies', default=True)
-        define('x_frame_options', default='DENY')
-        define('x_xss_protection', default=1)
-        define('x_content_type_options', default='nosniff')
-        define('debug', default=True)
-        define('config', help='Path to config file',
-               callback=lambda path: options.parse_config_file(path,
-                                                               final=False))
-        options.parse_command_line()
 
     def init_settings(self):
         settings = {
