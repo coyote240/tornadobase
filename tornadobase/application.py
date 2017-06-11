@@ -23,7 +23,6 @@ define('debug', default=True)
 define('config', help='Path to config file',
        callback=lambda path: options.parse_config_file(path,
                                                        final=False))
-options.parse_command_line()
 
 
 class Application(tornado.web.Application):
@@ -64,6 +63,7 @@ class Application(tornado.web.Application):
 
     def start(self):
         logging.info('Starting server...')
+        options.parse_command_line()
 
         server = HTTPServer(self)
 
