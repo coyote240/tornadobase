@@ -63,7 +63,6 @@ class Application(tornado.web.Application):
 
     def start(self):
         logging.info('Starting server...')
-        options.parse_command_line()
 
         server = HTTPServer(self)
 
