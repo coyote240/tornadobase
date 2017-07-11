@@ -11,6 +11,7 @@ define('server', default='TornadoServer/{}'.format(tornado.version),
        help='The Server header returned with HTTP responses.')
 define('port', type=int, default=8888,
        help='The port on which this app will listen.')
+define('address', type=str, help='The address on which this app will listen')
 define('login_url', default='/login', help='Path to login form')
 define('template_path', help='Location of template files.')
 define('static_path', help='Location of static files.')
@@ -67,10 +68,10 @@ class Application(tornado.web.Application):
         server = HTTPServer(self)
 
         if options.debug:
-            server.listen(options.port)
+            server.listen(options.port, address=options.address)
             tornado.ioloop.IOLoop.instance().start()
         else:
-            server.bind(options.port)
+            server.bind(options.port, address=options.address)
             server.start(0)
             tornado.ioloop.IOLoop.current().start()
 
