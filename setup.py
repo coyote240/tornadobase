@@ -15,7 +15,12 @@ setup(name='tornadobase',
       license='MIT',
       url='https://github.com/coyote240/tornadobase',
       packages=find_packages(exclude=['tests']),
+      entry_points={
+          'console_scripts': [
+              'tornadobase = tornadobase.project:main'
+            ]
+      },
       install_requires=[
-          'tornado>=4'
+          'tornado~=4.5'
       ],
       tests_require=['nose'])
