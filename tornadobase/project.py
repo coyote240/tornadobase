@@ -16,53 +16,39 @@ tornadobase new <path>
 '''
 
 
-class Command(object):
-    '''Command function decorator.
-    '''
-    commands = {}
-
-    def __init__(self, label, *args):
-        self.label = label
-
-    def __call__(self, command):
-        def wrapped_command(**kwargs):
-            command(**kwargs)
-
-        self.__class__.commands[self.label] = wrapped_command
-        return wrapped_command
-
-    @classmethod
-    def call(cls, **kwargs):
-        cmd = cls.commands.get(kwargs.get('command'))
-        if cmd is None:
-            raise Exception('Command not defined')
-        cmd(**kwargs)
+def hello(args):
+    print('Hello {0}'.format(args.who))
 
 
-@Command('hello')
-def hello(**kwargs):
-    print('Hello {who}'.format(**kwargs))
+def new_project(args):
+    print('create a new project at {0}'.format(args.path))
 
 
-@Command('new')
-def new_project(**kwargs):
-    print('create a new project at {path}'.format(**kwargs))
+def start():
+    pass
+
+
+parser = argparse.ArgumentParser()
+subparsers = parser.add_subparsers(title='commands')
+
+hello_parser = subparsers.add_parser(
+    'hello',
+    help='Proof of concept to further the command initiative')
+hello_parser.add_argument('who', type=str)
+hello_parser.set_defaults(command=hello)
+
+new_parser = subparsers.add_parser(
+    'new',
+    help='Create a new tornadobase project')
+new_parser.add_argument('path', type=str)
+new_parser.set_defaults(command=new_project)
+
+start_parser = subparsers.add_parser(
+    'start',
+    help='Start the web server')
+start_parser.set_defaults(command=start)
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    subparsers = parser.add_subparsers(title='commands', dest='command')
-
-    hello_parser = subparsers.add_parser(
-        'hello',
-        help='Proof of concept to further the command initiative')
-    hello_parser.add_argument('who', type=str)
-
-    new_parser = subparsers.add_parser(
-        'new',
-        help='Create a new tornadobase project')
-    new_parser.add_argument('path', type=str)
-
     args = parser.parse_args()
-
-    Command.call(**vars(args))
+    args.command(args)
